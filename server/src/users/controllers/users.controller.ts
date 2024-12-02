@@ -1,12 +1,23 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Body, Req, UsePipes, ValidationPipe, Res, UseGuards, Param } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { UsersService } from '../services/users.service';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
-@Controller('users')
+@Controller('/users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly userService: UsersService) {}
 
-  @Get()
-  getUsers() {
-    return this.usersService.fetchUsers();
+  @Post('/registration')
+  @UsePipes(new ValidationPipe())
+  async createUser(@Body() dto: CreateUserDto, @Res() response: Response) {
+    await this.userService.registerUser(dto);
+    response.send({message: "User created successfully"})
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('/:id')
+  async getById(@Param('id') id: string) {
+    return await this.userService.findById(id);
   }
 }
