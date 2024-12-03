@@ -5,6 +5,7 @@ import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersModule } from 'src/users/users.module';
 import { AuthController } from './controllers/auth.controller';
+import { AuthGuard } from './auth.guard';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { AuthController } from './controllers/auth.controller';
     forwardRef(() => UsersModule)
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
-  exports: [AuthService, JwtModule],
+  providers: [AuthService, JwtStrategy, AuthGuard],
+  exports: [AuthService, JwtModule, AuthGuard],
 })
 export class AuthModule {}

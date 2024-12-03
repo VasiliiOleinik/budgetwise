@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
         throw new UnauthorizedException('User not found');
       }
 
-      request.user = user;
+      request.user = {name: user.name, email: user.email, userId: user._id};
       return true;
     } catch (err) {
       throw new UnauthorizedException('Invalid token');
