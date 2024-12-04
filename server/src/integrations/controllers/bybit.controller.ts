@@ -26,4 +26,5 @@ export class ByBitController {
     const { apiKey, secretKey } = byBitIntegration; // Use API keys
     return this.byBit.getAccountInfo(apiKey, secretKey);
   }
+
 }
