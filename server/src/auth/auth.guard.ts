@@ -14,6 +14,7 @@ export class AuthGuard implements CanActivate {
 
     // Get token from cookies
     const token = request.cookies?.auth_token;
+    console.log('AuthGuard', token)
 
     if (!token) {
       throw new UnauthorizedException('Authentication token is missing');

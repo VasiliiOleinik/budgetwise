@@ -1,19 +1,21 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
-import routes, { RouteConfig } from "./utils/routes";
+import routes from "./utils/routes";
+import { axiosSetup } from "./utils/axios";
 
 function App() {
-  const renderRoutes = (routes: RouteConfig[]) =>
-    routes.map(({ path, element, children }) => (
-      <Route key={path} path={path} element={element}>
-        {children && renderRoutes(children)}
-      </Route>
-    ));
+  axiosSetup()
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
 
   return (
     <div className="p-4">
-      <Header />
-      <Routes>{renderRoutes(routes)}</Routes>
+     {!isLoginPage && <Header />}
+      <Routes>
+      {routes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
+      </Routes>
     </div>
   );
 }
