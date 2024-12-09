@@ -5,30 +5,29 @@ import GoalTracker from "@/pages/GoalTracker";
 import Login from "@/pages/Login";
 import Reports from "@/pages/Reports";
 import Settings from "@/pages/Settings";
-import React from "react";
 
 export interface RouteConfig {
   path: string;
-  element: React.ReactNode;
+  element: JSX.Element
   children?: RouteConfig[];
 }
 
 const routes: RouteConfig[] = [
   {
     path: "/",
-    element: <ProtectedRoute element={<Dashboard />}/>,
+    element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
   },
   {
-    path: "/about",
-    element: <ProtectedRoute element={<Settings />}/>,
+    path: "/settings",
+    element: <ProtectedRoute><Settings /></ProtectedRoute>,
   },
   {
     path: "/goal-tracker",
-    element: <ProtectedRoute element={<GoalTracker />}/>, 
+    element:  <ProtectedRoute><GoalTracker /></ProtectedRoute>,
   },
   {
     path: "/reports",
-    element: <ProtectedRoute element={<Reports />}/>,
+    element: <ProtectedRoute><Reports /></ProtectedRoute>,
   },
   {
     path: "/login",
@@ -39,5 +38,6 @@ const routes: RouteConfig[] = [
     element: <Error404 />,
   },
 ];
+
 
 export default routes;
