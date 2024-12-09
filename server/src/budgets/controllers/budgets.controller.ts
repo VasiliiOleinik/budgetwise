@@ -1,13 +1,19 @@
-import { Controller, Get, Post, Req, Res, Body, Param, Query, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards, } from '@nestjs/common';
 import { Response } from 'express';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { BudgetsService } from '../services/budgets.service';
+import {  UserDocument } from 'src/users/schemas/user.schema';
 
+@UseGuards(AuthGuard)
 @Controller('budgets')
 export class BudgetsController {
 
-    constructor(private budgetsService: any) {}
+    constructor(private readonly budgetsService: BudgetsService) {}
 
-    @Get()
-    getUsers() {
-        return this.budgetsService.fetchBudget()
+    @Get('/all-crypto-budget')
+    async getAllCryptoBudget(@Req() req: any, @Res() response: Response) {
+        const userId = req.user.userId;
+        const budget = await this.budgetsService.getAllCryptBudget(userId);
+        response.send({budget}).status(200);
     }
 }

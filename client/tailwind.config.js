@@ -6,6 +6,7 @@ export default {
     extend: {
       boxShadow: {
         'default-shadow': '0 2px 10px 0 #195dc212',
+       'custom-blue': '0 4px 10px 0 rgba(2, 87, 251, 0.2)'
       },
       transition: {
         transitionDuration: {
@@ -17,6 +18,9 @@ export default {
         transitionProperty: {
           DEFAULT: 'all',
         },
+      },
+      borderRadius: {
+        DEFAULT: '24px'
       }
     },
   },

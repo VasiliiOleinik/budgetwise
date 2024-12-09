@@ -33,11 +33,41 @@ export class BinanceService {
     return response.json(); // Return JSON response
   }
 
-  // Method to sign the request
-  private sign(query: string, secretKey: string): string {
-    return crypto
-      .createHmac('sha256', secretKey)
-      .update(query)
-      .digest('hex');
+  async getTotalBalanceInUSD(apiKey: string, secretKey: string): Promise<number> {
+    const accountBalances = await this.getAccountInfo(apiKey, secretKey);
+
+    const prices = await this.getPrices();
+
+    const totalInUSD = accountBalances.balances.reduce((total, asset) => {
+      const symbol = `${asset.asset}USDT`;
+      const price = prices[symbol] || '0';
+      return total + parseFloat(asset.free) * parseFloat(price);
+    }, 0);
+
+    return totalInUSD;
   }
+
+    private async getPrices(): Promise<Record<string, string>> {
+      const endpoint = '/api/v3/ticker/price';
+  
+      const response = await fetch(`${this.apiUrl}${endpoint}`);
+      if (!response.ok) {
+        throw new Error(`Binance Prices API error: ${response.statusText}`);
+      }
+  
+      const prices = await response.json();
+  
+      return prices.reduce((acc, price) => {
+        acc[price.symbol] = price.price;
+        return acc;
+      }, {});
+    }
+
+    // Method to sign the request
+    private sign(query: string, secretKey: string): string {
+      return crypto
+        .createHmac('sha256', secretKey)
+        .update(query)
+        .digest('hex');
+    }
 }

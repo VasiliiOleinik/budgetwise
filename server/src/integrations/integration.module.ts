@@ -18,6 +18,6 @@ import { ByBitService } from './services/bybit.service';
   ],
   controllers: [IntegrationsController, BinanceController, ByBitController], // Add controllers
   providers: [IntegrationsService, BinanceService, ByBitService], // Add platforms
-  exports: [IntegrationsService], // Export IntegrationsService for use in other modules
+  exports: [IntegrationsService, BinanceService, ByBitService], // Export IntegrationsService for use in other modules
 })
 export class IntegrationsModule {}

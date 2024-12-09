@@ -1,13 +1,22 @@
-import Container from "../Container";
+import Box from '../Box';
 
-export const PageNavigation = () => {
+const PageNavigation = ({items, page, setPage}) => {
     return (
-        <div className="bg-white shadow-[0_2px_12px_0_rgba(11,22,44,0.05)]">
-            <Container>
-                <div className="flex justify-end py-4">
-                    <p className="text-sm">Welcome, <span className="font-semibold">Vasyl Oliinyk</span></p>
-                </div>
-            </Container>
-        </div>
+        <Box className='max-w-[275px] sticky top-[24px] flex flex-col h-max'>
+            {items.map((item, index) => {
+                const isActive = page === index;
+                return (
+                    <button 
+                        key={index} 
+                        onClick={() => setPage(index)}
+                        className={`text-semibold rounded-md w-full flex items-center text-base p-3 transition bg-white hover:text-blue-500 ${isActive && 'text-blue-500'}`}
+                    >
+                        {item?.icon}{item.name}
+                    </button>
+                );
+            })}
+        </Box>
     );
 };
+
+export default PageNavigation;

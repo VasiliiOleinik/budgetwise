@@ -5,7 +5,8 @@ export const axiosSetup = () => {
   const token = Cookies.get("auth_token"); 
   const bearerToken = `Bearer ${token}`
 
-  axios.defaults.baseURL = 'http://localhost:3000/'
+  axios.defaults.baseURL = 'http://localhost:3000'
+  axios.defaults.withCredentials = true
 
   axios.interceptors.request.use(
     config => {

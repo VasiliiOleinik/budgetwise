@@ -1,4 +1,4 @@
-import {PageNavigation} from '../PageNavigation';
+import {Header} from '../Header';
 import Container from '../Container';
 
 const PageWrapper = ({children}) => {
@@ -6,7 +6,7 @@ const PageWrapper = ({children}) => {
         <div className='flex align-top'>
             <div className='w-[200px] max-w-[200px] p-0'></div>
             <div className='flex-1'>
-                <PageNavigation />
+                <Header />
                 <div className='pt-12 pb-16 min-h-[92vh]'>
                     <Container>
                     {children}

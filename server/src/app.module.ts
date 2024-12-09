@@ -5,6 +5,7 @@ import { GoalsModule } from './goals/goals.module';
 import { AuthModule } from './auth/auth.module';
 import { IntegrationsModule } from './integrations/integration.module';
 import { ConfigModule } from '@nestjs/config';
+import { BudgetsModule } from './budgets/budgets.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     UsersModule,
     GoalsModule,
+    BudgetsModule,
     IntegrationsModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
