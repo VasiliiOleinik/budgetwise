@@ -1,4 +1,5 @@
 import Box from '../Box';
+import Button from '../Button';
 
 const PageNavigation = ({items, page, setPage}) => {
     return (

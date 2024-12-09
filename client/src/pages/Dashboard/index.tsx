@@ -1,20 +1,33 @@
-import { getAllCryptBudget } from '@/api';
 import Box from '@/components/Box';
-import { useQuery } from '@tanstack/react-query';
+import { useDashboard } from './useDashboard';
+import {CurrencyDollarIcon } from '@heroicons/react/24/outline';
 
 const Dashboard = () => {
-    const {data, isLoading} = useQuery({ queryKey: ['cryptoBudget'], queryFn: getAllCryptBudget })
+    const {cryptoAmount, isLoading} = useDashboard()
 
     return (
         <div>
-            {isLoading ? 'Loading...' : null}
-            {!isLoading && (
+            <h1 className='font-bold text-2xl mb-4'>Dashboard</h1>
+            <div className='grid grid-cols-[repeat(auto-fit,_minmax(248px,_1fr))] gap-4 mb-6 justify-between'>
+                <Box isLoading={isLoading}>
+                   <div className='flex items-center w-full'>
+                        <CurrencyDollarIcon width={24} className='flex-shrink-0 mr-2'/>
+                        <div className='flex flex-col'>
+                            <div className='text-sm font-semibold text-gray-600'>Crypto balance</div>
+                            <div className='font-bold text-xl'>{cryptoAmount.toFixed(5)}</div>
+                        </div>
+                   </div>
+                </Box>
                 <Box>
-                Crypto balance:<br/>
-                { data[0]?.data + data[1]?.data}
-            </Box>
-            )}
-            
+                    In development...
+                </Box>
+                <Box>
+                    In development...
+                </Box>
+                <Box>
+                    In development...
+                </Box>
+            </div> 
         </div>
     );
 };
