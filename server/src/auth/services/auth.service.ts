@@ -6,10 +6,11 @@ import { Types } from 'mongoose';
 export class AuthService {
   constructor(private jwtService: JwtService) {}
 
-  async generateToken(user: { userId: Types.ObjectId; email: string }) {
+  async generateToken(user: { userId: Types.ObjectId; email: string, name: string }) {
     return this.jwtService.sign({
       userId: user.userId.toString(),
       email: user.email,
+      name: user.name,
     });
   }
 

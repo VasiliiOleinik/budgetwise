@@ -44,7 +44,7 @@ export class AuthController {
     }
 
     // Generate token
-    const token = await this.authService.generateToken({ userId: user._id, email: user.email });
+    const token = await this.authService.generateToken({ userId: user._id, email: user.email, name: user.name });
     console.log('Login token', token);
 
     // Set cookie with token

@@ -1,10 +1,9 @@
 import Box from '../Box';
-import Button from '../Button';
 
 const PageNavigation = ({items, page, setPage}) => {
     return (
         <Box className='max-w-[275px] sticky top-[24px] flex flex-col h-max'>
-            {items.map((item, index) => {
+            {items?.map((item, index) => {
                 const isActive = page === index;
                 return (
                     <button 
