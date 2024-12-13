@@ -5,6 +5,7 @@ import Icons from '../Icons'
 import Button from '../Button'
 import { BUTTON_VARIANTS } from '../Button/constants'
 import { useBudgetForm } from './useBudgetForm'
+import BudgetTableHeader from '../BudgetTableHeader'
 
 const BudgetForm = ({
   selectedBudgetSection,
@@ -18,23 +19,7 @@ const BudgetForm = ({
 
   return (
     <>
-      <TableHeader>
-        <div className="flex items-center font-semibold uppercase text-xs z-10 col-span-1">
-          Icon
-        </div>
-        <div className="flex items-center font-semibold uppercase text-xs z-10 col-span-5">
-          Title
-        </div>
-        <div className="flex items-center font-semibold uppercase text-xs z-10 col-span-2">
-          Amount
-        </div>
-        <div className="flex items-center font-semibold uppercase text-xs z-10 col-span-3">
-          Description
-        </div>
-        <div className="flex items-center font-semibold uppercase text-xs z-10 col-span-1">
-          Actions
-        </div>
-      </TableHeader>
+      <BudgetTableHeader />
       {watchItems[selectedBudgetSection].map(
         ({ icon, title, amount, description }, index) => {
           const isRowEditable = editableItem === index

@@ -57,3 +57,7 @@ export function getBudgetPrediction(budgetType, income) {
 
   return getZeroBased()
 }
+
+export function calculateExpenses(items) {
+  return items.reduce((acc, item) => acc + item.amount, 0)
+}

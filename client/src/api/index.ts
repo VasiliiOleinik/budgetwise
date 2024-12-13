@@ -17,3 +17,9 @@ export async function login(data) {
 export async function addBudget(data) {
   await axios.post('budgets/add-budget', data)
 }
+
+export async function getBudgets() {
+  const { data } = await axios.get('budgets/get-budgets')
+
+  return data.budget
+}
