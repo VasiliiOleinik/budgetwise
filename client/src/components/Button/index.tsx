@@ -1,9 +1,17 @@
-const Button = ({children, className, ...rest}) => {
+import { BUTTON_TYPES, BUTTON_VARIANTS, buttonVariants } from './constants';
+import { cn } from '@/utils';
+import { ButtonProps } from './types';
+
+
+const Button = ({children, className = '', type = BUTTON_TYPES.button, variant = BUTTON_VARIANTS.blue, ...rest}: ButtonProps) => {
+
+    const combinedClassNames = buttonVariants({
+        variant,
+        class: className,
+      })
+    
     return (
-        <button 
-            className={`py-4 px-6 transition text-sm font-bold rounded-[44px] bg-blue-500 text-white shadow-custom-blue hover:scale-105 ${className}`}
-            {...rest}
-        >
+        <button  className={cn(combinedClassNames)} type={type} {...rest}>
             {children}
         </button>
     );

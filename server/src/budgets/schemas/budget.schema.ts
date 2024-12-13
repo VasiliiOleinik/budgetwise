@@ -1,45 +1,42 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
+import { HydratedDocument, Types } from 'mongoose'
+import { BudgetItem, BudgetItemSchema } from './budget-item.schema'
 
-export type BudgetDocument = HydratedDocument<Budget>;
+export type BudgetDocument = HydratedDocument<Budget>
 
 @Schema()
 export class Budget {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  userId: Types.ObjectId;
+  userId: Types.ObjectId
 
   @Prop({ required: true })
-  title: string;
+  title: string
 
   @Prop({ required: true })
-  income: string;
+  income: string
 
   @Prop({ required: true })
-  currency: string;
+  currency: string
 
-  @Prop({required: true})
-  budgetType?: string;
+  @Prop({ required: true })
+  budgetType?: string
 
   @Prop({ default: Date.now })
-  createdAt: Date;
+  createdAt: Date
 
   @Prop({
-    type: [
-      {
-        icon: { type: String, required: false },
-        title: { type: String, required: true },
-        amount: { type: String, required: true },
-        description: { type: String, required: false },
-      },
-    ],
-    default: [],
+    type: {
+      essentialNeeds: [BudgetItemSchema],
+      personalWants: [BudgetItemSchema],
+      savings: [BudgetItemSchema],
+    },
+    default: {},
   })
   items: {
-    icon?: string;
-    title: string;
-    amount: string;
-    description?: string;
-  }[];
+    essentialNeeds: BudgetItem[]
+    personalWants: BudgetItem[]
+    savings: BudgetItem[]
+  }
 }
 
-export const BudgetSchema = SchemaFactory.createForClass(Budget);
+export const BudgetSchema = SchemaFactory.createForClass(Budget)
