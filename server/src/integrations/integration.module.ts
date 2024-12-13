@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import {  Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Integration, IntegrationSchema } from './schemas/integration.schema';
 import { IntegrationsController } from './controllers/integration.controller';

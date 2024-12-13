@@ -1,5 +1,6 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Budget } from "@/pages/Budget";
+import AddBudget from "@/pages/AddBudget";
 import Dashboard from "@/pages/Dashboard";
 import Error404 from "@/pages/Error404";
 import GoalTracker from "@/pages/GoalTracker";
@@ -33,6 +34,10 @@ const routes: RouteConfig[] = [
   {
     path: "/budget-planner",
     element: <ProtectedRoute><Budget /></ProtectedRoute>,
+  },
+  {
+    path: "/add-budget",
+    element: <ProtectedRoute><AddBudget /></ProtectedRoute>,
   },
   {
     path: "/login",

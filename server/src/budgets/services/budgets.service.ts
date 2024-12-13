@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { ObjectId } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { BinanceService } from 'src/integrations/services/binance.service';
 import { ByBitService } from 'src/integrations/services/bybit.service';
 import { IntegrationsService } from 'src/integrations/services/integration.service';
+import { Budget, BudgetDocument } from '../schemas/budget.schema';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class BudgetsService {
     constructor(
+        @InjectModel(Budget.name) private integrationModel: Model<BudgetDocument>,
         private readonly binanceService: BinanceService,
         private readonly byBitService: ByBitService,
         private readonly integrationsService: IntegrationsService,
@@ -44,5 +47,10 @@ export class BudgetsService {
         const results = await Promise.all(requests);
 
         return results;
+    }
+
+    async addBudget(userId: string, budget: any) {
+        const newBudget = new this.integrationModel({ userId, ...budget });
+        return newBudget.save();
     }
 }
