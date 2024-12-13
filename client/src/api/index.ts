@@ -9,3 +9,7 @@ export async function getAllCryptBudget() {
         console.error(error);
     }
 }
+
+export async function login(data) {
+    await axios.post('/api/v1/auth/login', data);
+}

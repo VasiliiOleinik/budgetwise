@@ -14,7 +14,7 @@ export const Header = () => {
                     <Button className="py-2">
                         Add Goal
                     </Button>
-                    <p className="text-sm">Welcome, <span className="font-semibold">{user.name}</span></p>
+                    <p className="text-sm">Welcome, <span className="font-semibold">{user?.name}</span></p>
                 </div>
             </Container>
         </div>

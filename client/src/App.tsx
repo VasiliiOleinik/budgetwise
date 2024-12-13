@@ -11,24 +11,24 @@ function App() {
 
   return (
     <div className="bg-[#f7f9fc] min-h-full color-[#6f7182]">
-     {!isLoginPage && <Sidebar />}
-     <Routes>
-  {routes.map((route, index) => (
-    <Route
-      key={index}
-      path={route.path}
-      element={
-        isLoginPage ? (
-          route.element
-        ) : (
-          <PageWrapper>
-            {route.element}
-          </PageWrapper>
-        )
-      }
-    />
-  ))}
-</Routes>
+      {!isLoginPage && <Sidebar />}
+      <Routes>
+        {routes.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+              isLoginPage ? (
+                route.element
+              ) : (
+                <PageWrapper>
+                  {route.element}
+                </PageWrapper>
+              )
+            }
+          />
+        ))}
+      </Routes>
     </div>
   );
 }
