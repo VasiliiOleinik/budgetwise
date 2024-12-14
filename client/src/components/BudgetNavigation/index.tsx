@@ -1,6 +1,6 @@
 import Button from '@/components/Button'
-import { BUDGET_SECTIONS } from './constants'
 import { BUTTON_VARIANTS } from '@/components/Button/constants'
+import { BUDGET_SECTIONS } from '@/pages/AddBudget/constants'
 
 const BudgetNavigation = ({
   selectedBudgetSection,

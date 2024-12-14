@@ -5,7 +5,8 @@ import { solidIcons } from '@/constants/solidIcons'
 import { ICON_TYPES } from './constants'
 import { generateKey } from '@/utils'
 
-const Icons = ({ setIcon }) => {
+const Icons = ({ setIcon, defaultIcon }) => {
+  const [selectedIcon, setSelectedIcon] = useState(defaultIcon)
   const [iconType, setIconType] = useState(ICON_TYPES.solid)
   const [showIcons, setShowIcons] = useState(false)
 
@@ -17,16 +18,17 @@ const Icons = ({ setIcon }) => {
 
   function handleIconClick(icon) {
     setIcon(icon)
+    setSelectedIcon(icon)
     setShowIcons(false)
   }
 
   return (
     <div className="relative z-30">
       <button
-        className="px-2 py-1 transition text-lg font-bold border rounded-[44px] bg-white shadow-default-shadow hover:bg-blue-500 hover:text-white"
+        className="px-2 py-1 transition text-lg font-bold border rounded-[44px] bg-blue-500 text-white shadow-default-shadow hover:bg-white hover:text-black w-[40px] h-[40px]"
         onClick={() => setShowIcons(!showIcons)}
       >
-        <i className="fa-solid fa-icons"></i>
+        <i className={selectedIcon}></i>
       </button>
       <div
         className="absolute top-6 left-0 bg-white shadow-md rounded-3xl w-[380px] h-[250px] flex flex-col p-4 overflow-auto z-20"

@@ -11,17 +11,12 @@ export const useAddBudget = () => {
   const navigate = useNavigate()
   const [selectedBudgetSection, setSelectedBudgetSection] =
     useState<BUDGET_SECTIONS>(BUDGET_SECTIONS.essentialNeeds)
-  const {
-    formState: { errors },
-    control,
-    watch,
-    handleSubmit,
-    setValue,
-  } = useForm<AddBudgetSchemaType>({
-    resolver: zodResolver(AddBudgetSchema),
-    defaultValues: defaultBudgetFormData,
-    mode: 'all',
-  })
+  const { control, watch, handleSubmit, setValue } =
+    useForm<AddBudgetSchemaType>({
+      resolver: zodResolver(AddBudgetSchema),
+      defaultValues: defaultBudgetFormData,
+      mode: 'all',
+    })
 
   const currency = watch('currency')
   const watchItems = watch('items')
@@ -37,9 +32,6 @@ export const useAddBudget = () => {
     console.log(data)
     mutate(data)
   }
-
-  console.log('watch', watch())
-  console.log('errors', errors)
 
   return {
     selectedBudgetSection,

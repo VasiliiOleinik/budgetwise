@@ -61,4 +61,33 @@ export class BudgetsService {
   async getBudgets(userId: string, budget: any) {
     return this.budgetModel.find({ userId }).exec()
   }
+
+  async getBudgetById(userId: string, budgetId: any) {
+    const budget = await this.budgetModel
+      .findOne({ userId, _id: budgetId })
+      .exec()
+
+    if (!budget) {
+      return null
+    }
+
+    return budget
+  }
+
+  async editBudget({ userId, budgetId, budget }) {
+    return this.budgetModel
+      .findOneAndUpdate(
+        { userId, _id: budgetId },
+        { $set: budget },
+        { new: true },
+      )
+      .exec()
+  }
+
+  async deleteBudget({ userId, budgetId }) {
+    const deletedBudget = await this.budgetModel
+      .findOneAndDelete({ _id: budgetId, userId })
+      .exec()
+    return deletedBudget
+  }
 }

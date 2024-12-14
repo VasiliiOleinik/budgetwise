@@ -275,7 +275,7 @@ export enum BUDGET_SECTIONS {
 }
 
 export const defaultBudgetItem = {
-  icon: '',
+  icon: 'fa-solid fa-icons',
   title: '',
   amount: '0',
   description: '',

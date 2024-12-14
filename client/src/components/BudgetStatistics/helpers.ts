@@ -1,34 +1,42 @@
 import { BUDGET_TYPES } from '@/pages/AddBudget/constants'
 
+function calculateIncome(income, multiplier) {
+  if (!String(income).length || income === 0) {
+    return 0
+  }
+
+  return Math.round(income * multiplier)
+}
+
 export function getBasicDistribution(income: number) {
   return {
-    needs: Math.round(income * 0.5),
-    wants: Math.round(income * 0.3),
-    savings: Math.round(income * 0.2),
+    needs: calculateIncome(income, 0.5),
+    wants: calculateIncome(income, 0.3),
+    savings: calculateIncome(income, 0.2),
   }
 }
 
 export function getSavingsAndGiving(income: number) {
   return {
-    needs: Math.round(income * 0.7),
-    wants: Math.round(income * 0.2),
-    savings: Math.round(income * 0.1),
+    needs: calculateIncome(income, 0.7),
+    wants: calculateIncome(income, 0.2),
+    savings: calculateIncome(income, 0.1),
   }
 }
 
 export function getMinimalSavings(income: number) {
   return {
-    needs: Math.round(income * 0.8),
+    needs: calculateIncome(income, 0.8),
     wants: 0,
-    savings: Math.round(income * 0.2),
+    savings: calculateIncome(income, 0.2),
   }
 }
 
 export function getUniversalBalance(income: number) {
   return {
-    needs: Math.round(income * 0.6),
-    wants: Math.round(income * 0.3),
-    savings: Math.round(income * 0.1),
+    needs: calculateIncome(income, 0.6),
+    wants: calculateIncome(income, 0.3),
+    savings: calculateIncome(income, 0.1),
   }
 }
 
@@ -59,5 +67,9 @@ export function getBudgetPrediction(budgetType, income) {
 }
 
 export function calculateExpenses(items) {
-  return items.reduce((acc, item) => acc + item.amount, 0)
+  return Math.round(
+    items.reduce((acc, item) => {
+      return Number(acc) + Number(item.amount)
+    }, 0),
+  )
 }

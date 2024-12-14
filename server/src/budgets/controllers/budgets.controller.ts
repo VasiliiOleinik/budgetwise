@@ -1,8 +1,17 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common'
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { AuthGuard } from 'src/auth/auth.guard'
 import { BudgetsService } from '../services/budgets.service'
-import { UserDocument } from 'src/users/schemas/user.schema'
 
 @UseGuards(AuthGuard)
 @Controller('budgets')
@@ -27,6 +36,59 @@ export class BudgetsController {
   async getBudgets(@Req() req: any, @Res() response: Response) {
     const userId = req.user.userId
     const budget = await this.budgetsService.getBudgets(userId, req.body)
+    response.send({ budget }).status(200)
+  }
+
+  @Get('/get-budget/:id')
+  async getBudgetById(
+    @Req() req: any,
+    @Res() response: Response,
+    @Param('id') budgetId: string,
+  ) {
+    const userId = req.user.userId
+    const budget = await this.budgetsService.getBudgetById(userId, budgetId)
+
+    if (!budget) {
+      return response.status(404).send({ message: 'Budget not found' })
+    }
+
+    response.send({ budget }).status(200)
+  }
+
+  @Put('/edit-budget/:id')
+  async editBudget(
+    @Req() req: any,
+    @Res() response: Response,
+    @Param('id') budgetId: string,
+  ) {
+    const userId = req.user.userId
+    const budget = req.body
+
+    const updatedBudget = await this.budgetsService.editBudget({
+      userId,
+      budgetId,
+      budget,
+    })
+
+    if (!updatedBudget) {
+      return response.status(404).send({ message: 'Budget not found' })
+    }
+
+    response.status(200).send({ budget: updatedBudget })
+  }
+
+  @Delete('/delete-budget/:id')
+  async deleteBudget(
+    @Req() req: any,
+    @Res() response: Response,
+    @Param('id') budgetId: string,
+  ) {
+    const userId = req.user.userId
+    const budget = await this.budgetsService.deleteBudget({
+      userId,
+      budgetId,
+    })
+
     response.send({ budget }).status(200)
   }
 }

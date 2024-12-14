@@ -2,10 +2,10 @@ import Collapse from '@/components/Collapse'
 import { useBudgetPage } from './useBudgetPage'
 import Spinner from '@/components/Spinner'
 import BudgetTableHeader from '@/components/BudgetTableHeader'
-import BudgetNavigation from '../AddBudget/BudgetNavigation'
 import BudgetStatistics from '@/components/BudgetStatistics'
 import TableRow from '@/components/Table/TableRow'
-import { CURRENCIES, currenciesSymbols } from '../AddBudget/constants'
+import { currenciesSymbols } from '../AddBudget/constants'
+import BudgetNavigation from '@/components/BudgetNavigation'
 
 const BudgetPage = () => {
   const {
@@ -13,6 +13,8 @@ const BudgetPage = () => {
     isLoading,
     selectedBudgetSection,
     setSelectedBudgetSection,
+    deleteBudgetMutate,
+    navigate,
   } = useBudgetPage()
 
   if (isLoading) {
@@ -23,11 +25,29 @@ const BudgetPage = () => {
     )
   }
 
-  return budgets?.map((budget) => {
+  return budgets?.reverse().map((budget) => {
     const { title, _id, budgetType, items, currency } = budget
-    console.log(budget)
     return (
-      <Collapse title={`${title} (${budgetType})`} key={_id}>
+      <Collapse
+        title={
+          <div className="flex items-center justify-between w-full">
+            <span>
+              {title} ({budgetType})
+            </span>
+            <div className="flex items-center">
+              <i
+                className="fas fa-edit text-blue-500 text-lg hover:text-blue-700 p-1 cursor-pointer mr-3 transition"
+                onClick={() => navigate(`/edit-budget/${_id}`)}
+              />
+              <i
+                className="fas fa-trash text-red-500 text-lg hover:text-red-700 p-1 cursor-pointer transition"
+                onClick={() => deleteBudgetMutate(_id)}
+              />
+            </div>
+          </div>
+        }
+        key={_id}
+      >
         <>
           <BudgetStatistics formData={budget} />
           <BudgetNavigation
@@ -40,7 +60,7 @@ const BudgetPage = () => {
               return (
                 <TableRow key={index} style={{ zIndex: 1000 - index }}>
                   <div className="flex items-center font-semibold uppercase text-xs z-50 col-span-1">
-                    <i className={`${icon} text-lg hover:text-blue-500 p-1`} />
+                    <i className={`${icon} text-lg text-blue-500 p-1`} />
                   </div>
                   <div className="flex items-center font-semibold uppercase text-xs z-10 col-span-5">
                     <input

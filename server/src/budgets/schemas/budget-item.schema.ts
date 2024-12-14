@@ -9,7 +9,7 @@ export class BudgetItem {
   title: string
 
   @Prop({ required: true })
-  amount: number
+  amount: string
 
   @Prop()
   description?: string

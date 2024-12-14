@@ -1,5 +1,4 @@
 import { Controller } from 'react-hook-form'
-import TableHeader from '../Table/TableHeader'
 import TableRow from '../Table/TableRow'
 import Icons from '../Icons'
 import Button from '../Button'
@@ -14,31 +13,28 @@ const BudgetForm = ({
   setValue,
   watchItems,
 }) => {
-  const { editableItem, setEditableItem, appendData, removeData } =
-    useBudgetForm({ control, selectedBudgetSection })
+  const { appendData, removeData } = useBudgetForm({
+    control,
+    selectedBudgetSection,
+  })
 
   return (
     <>
       <BudgetTableHeader />
       {watchItems[selectedBudgetSection].map(
-        ({ icon, title, amount, description }, index) => {
-          const isRowEditable = editableItem === index
-
+        ({ icon, title, amount, description, _id }, index) => {
           return (
-            <TableRow key={index} style={{ zIndex: 1000 - index }}>
+            <TableRow key={_id || index} style={{ zIndex: 1000 - index }}>
               <div className="flex items-center font-semibold uppercase text-xs z-50 col-span-1">
-                {isRowEditable ? (
-                  <Icons
-                    setIcon={(selectedIcon) =>
-                      setValue(
-                        `items.${selectedBudgetSection}.${index}.icon`,
-                        selectedIcon,
-                      )
-                    }
-                  />
-                ) : (
-                  <i className={`${icon} text-lg hover:text-blue-500 p-1`} />
-                )}
+                <Icons
+                  defaultIcon={icon}
+                  setIcon={(selectedIcon) =>
+                    setValue(
+                      `items.${selectedBudgetSection}.${index}.icon`,
+                      selectedIcon,
+                    )
+                  }
+                />
               </div>
               <div className="flex items-center font-semibold uppercase text-xs z-10 col-span-5">
                 <Controller
@@ -48,8 +44,8 @@ const BudgetForm = ({
                   render={({ field }) => (
                     <input
                       type="text"
-                      className={`py-2 px-3 rounded bg-white w-full ${isRowEditable ? 'shadow-default-shadow border' : ''}`}
-                      disabled={!isRowEditable}
+                      className={`py-2 px-3 rounded bg-white w-full shadow-default-shadow border`}
+                      disabled={false}
                       {...field}
                     />
                   )}
@@ -64,8 +60,8 @@ const BudgetForm = ({
                     <>
                       <input
                         type="text"
-                        className={`py-2 px-3 rounded bg-white w-full ${isRowEditable ? 'shadow-default-shadow border' : ''}`}
-                        disabled={!isRowEditable}
+                        className={`py-2 px-3 rounded bg-white w-full shadow-default-shadow border`}
+                        disabled={false}
                         {...field}
                       />
                       {currency}
@@ -82,8 +78,8 @@ const BudgetForm = ({
                     <>
                       <input
                         type="text"
-                        className={`py-2 px-3 rounded bg-white w-full ${isRowEditable ? 'shadow-default-shadow border' : ''}`}
-                        disabled={!isRowEditable}
+                        className={`py-2 px-3 rounded bg-white w-full shadow-default-shadow border`}
+                        disabled={false}
                         {...field}
                       />
                     </>
@@ -91,17 +87,6 @@ const BudgetForm = ({
                 />
               </div>
               <div className="flex items-center font-semibold uppercase text-xs z-[2] col-span-1">
-                {editableItem === index ? (
-                  <i
-                    className="fa-solid fa-circle-check text-green-500 text-lg hover:text-green-700 p-1 cursor-pointer mr-3 transition"
-                    onClick={() => setEditableItem('')}
-                  />
-                ) : (
-                  <i
-                    className="fas fa-edit text-blue-500 text-lg hover:text-blue-700 p-1 cursor-pointer mr-3 transition"
-                    onClick={() => setEditableItem(index)}
-                  />
-                )}
                 <i
                   className="fas fa-trash text-red-500 text-lg hover:text-red-700 p-1 cursor-pointer transition"
                   onClick={() => removeData(index)}
