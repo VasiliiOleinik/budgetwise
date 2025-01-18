@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import * as cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 
 const allowedOrigins = [
@@ -12,7 +13,21 @@ const allowedOrigins = [
 
 async function bootstrap() {
   const PORT = process.env.PORT ?? 3000
+  const KAFKA_KROKER = process.env.KAFKA_KROKER
   const app = await NestFactory.create(AppModule);
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        brokers: [KAFKA_KROKER],
+      },
+      consumer: {
+        groupId: 'nest-consumer-group',
+      },
+    },
+  });
+
   app.use(cookieParser());
   app.setGlobalPrefix('api/v1');
   app.enableCors({
@@ -26,7 +41,7 @@ async function bootstrap() {
     credentials: true,    
   });
 
-  
+  await app.startAllMicroservices()
   await app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
 }
 bootstrap();

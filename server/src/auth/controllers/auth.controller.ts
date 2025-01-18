@@ -3,7 +3,6 @@ import { Response } from 'express';
 import { AuthService } from '../services/auth.service';
 import { UsersService } from 'src/users/services/users.service';
 import { UserDocument } from 'src/users/schemas/user.schema';
-import { LoginDto } from '../dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -11,11 +10,6 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
   ) {}
-
-  // @Post('login')
-  // signin(@Body() loginDto: LoginDto) {
-  // return this.authService.login(loginDto);
-  // }
 
   @Post('login')
   async login(
@@ -45,7 +39,6 @@ export class AuthController {
 
     // Generate token
     const token = await this.authService.generateToken({ userId: user._id, email: user.email, name: user.name });
-    console.log('Login token', token);
 
     // Set cookie with token
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
