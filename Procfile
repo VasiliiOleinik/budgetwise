@@ -1,1 +1,1 @@
-web: npm install && npm run build:no-tsc
+web: npm install && npm run build:noTsc
