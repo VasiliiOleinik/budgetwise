@@ -1,1 +1,1 @@
-web: npm install && npm run heroku-postbuild
+web: serve -s dist
