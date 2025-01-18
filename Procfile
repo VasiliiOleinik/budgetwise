@@ -1,1 +1,1 @@
-web: npm install && npm run build:noTsc
+web: npm install && npm run heroku-postbuild
