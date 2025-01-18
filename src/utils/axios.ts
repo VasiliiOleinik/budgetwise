@@ -5,7 +5,7 @@ export const axiosSetup = () => {
   const token = Cookies.get('auth_token')
   const bearerToken = `Bearer ${token}`
 
-  axios.defaults.baseURL = 'http://localhost:3000/api/v1/'
+  axios.defaults.baseURL = 'https://budgetwise-auth-5cba1d32d7c3.herokuapp.com/api/v1/'
   axios.defaults.withCredentials = true
 
   axios.interceptors.request.use(
