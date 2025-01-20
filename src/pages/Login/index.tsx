@@ -14,7 +14,8 @@ const Login = () => {
 
     const {mutate} = useMutation({
       mutationFn: login,
-      onSuccess:() => {
+      onSuccess:(token:  string) => {
+        localStorage.setItem('auth_token', token);
         navigate('/')
       },
       onError: ({response}) => {

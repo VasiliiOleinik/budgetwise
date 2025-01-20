@@ -10,8 +10,10 @@ export async function getAllCryptBudget() {
   }
 }
 
-export async function login(data) {
-  await axios.post('auth/login', data)
+export async function login(data): Promise<string> {
+ const {data: {token}}  = await axios.post('auth/login', data)
+
+ return token
 }
 
 export async function addBudget(data) {
